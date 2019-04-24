@@ -13,5 +13,8 @@
     "@babel/node": "^7.2.2",
     "@babel/polyfill": "^7.4.3",
     "@babel/preset-env": "^7.4.3"
+  },
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1"
   }
 }

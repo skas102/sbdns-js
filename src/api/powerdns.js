@@ -1,3 +1,4 @@
+import 'isomorphic-fetch'
 import Zone from './models/zone'
 
 class PowerDNSApi {
@@ -12,23 +13,13 @@ class PowerDNSApi {
     }
 
     // Calls the PowerDNS API to get all the zones.
-    getZones(){
-        return [
-            new Zone({
-                'id': 'example.com.',
-                'name': 'example.com.',
-                'kind': 'Native',
-                'nameservers': [],
-                'dnssec': 0
-            }),
-            new Zone({
-                'id': 'example1.com.',
-                'name': 'example1.com.',
-                'kind': 'Native',
-                'nameservers': [],
-                'dnssec': 0
-            })
-        ]
+    async getZones(){
+        const url = `http://${this.host}:${this.port}${this.basePath}/servers/${this.serverId}/zones`
+        const response = await fetch(url, {
+            headers: new Headers(this.authHeader)
+        })
+        var zones = await response.json()
+        return zones.map(zone => new Zone(zone))
     }
 
 }

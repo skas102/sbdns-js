@@ -2,7 +2,7 @@ import '@babel/polyfill'
 import { printError, verifyEnvironmentVariables } from './util'
 import PowerDNSApi from '../api/powerdns'
 
-function listZones() {
+async function listZones() {
     // Check that environment variables are set
     verifyEnvironmentVariables()
 
@@ -14,9 +14,10 @@ function listZones() {
     const api = new PowerDNSApi(host, port, apiKey)
     var zones = []
     try{
-        zones = api.getZones()
+        zones = await api.getZones()
     } catch (e) {
         printError(e)
+        process.exit(1)
     }
 
     console.table(zones)
